@@ -37,3 +37,13 @@ using (
   ((auth.jwt() ->> 'email'::text) = email)
 );
 ```
+---
+- Enable select for clients based on user_id == user yang sudah login hanya bisa lihat punya dia sendiri
+```sql
+alter policy "Enable select for clients based on user_id"
+on "public"."clients"
+to authenticated
+using (
+  (( SELECT auth.uid() AS uid) = user_id)
+);
+```
