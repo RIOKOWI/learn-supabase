@@ -6,5 +6,6 @@
 
 ENDPOINT CLIENT
 ```
-{{BASE_URL}}/rest/v1/clients
+{{BASE_URL}}clients  #
+{{BASE_URL}}orders
 ```
