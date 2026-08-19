@@ -15,7 +15,7 @@ ENDPOINT CLIENT
 # Row Level Security
 - anon = untuk semua orang
 * note : memberi rls bisa pakai template yang di sediakan supabase
-
+---
 - example of Enable insert for authenticated users only rls : 
 ```sql
 alter policy "Enable insert for authenticated users only"
@@ -23,5 +23,17 @@ on "public"."clients"
 to authenticated
 with check (
   true
+);
+```
+---
+- policy untuk memperbolehkan user update based on email
+```sql
+alter policy "enable update for user by email"
+on "public"."clients"
+to public
+using (
+  ((auth.jwt() ->> 'email'::text) = email)
+) with check (
+  ((auth.jwt() ->> 'email'::text) = email)
 );
 ```
