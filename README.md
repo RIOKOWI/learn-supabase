@@ -303,3 +303,11 @@ const recoverPassword = async () => {
 </body>
 </html>
 ```
+
+# URL Configuration
+`http://localhost:3000` -> Development
+`http://bonjour` -> Production
+
+* Note : change the basic url for production apps/web
+
+- feature Redirect URL`s its the same use case for redirect to page to another page
