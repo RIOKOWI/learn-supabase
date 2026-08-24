@@ -84,6 +84,7 @@ const signOut = async () => {
 # Recover Password
 - you need recovery password page
 - you need url callback `http://localhost:3000/profile/update` for update profile
+- rate limit 2 email/hour
 - example code of recovery pass page :
 ```js
 <script setup>
@@ -142,4 +143,163 @@ const recoverPassword = async () => {
 </template>
 
 <style lang='scss'></style>
+```
+
+# Email Templates
+- you can styling email templates supabase by default
+- examle code :
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You've been invited</title>
+</head>
+
+<body style="margin:0; padding:0; background-color:#f4f4f5; font-family:Arial, Helvetica, sans-serif; color:#18181b;">
+
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f4f4f5; padding:40px 20px;">
+    <tr>
+      <td align="center">
+
+        <!-- Container -->
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:520px;">
+
+          <!-- Logo / Brand -->
+          <tr>
+            <td align="center" style="padding-bottom:24px;">
+              <div style="
+                display:inline-block;
+                background-color:#111111;
+                color:#ffffff;
+                font-size:20px;
+                font-weight:bold;
+                padding:12px 18px;
+                border-radius:10px;
+                letter-spacing:-0.5px;
+              ">
+                LEARN SUPABASE
+              </div>
+            </td>
+          </tr>
+
+          <!-- Card -->
+          <tr>
+            <td style="
+              background-color:#ffffff;
+              border:1px solid #e4e4e7;
+              border-radius:16px;
+              padding:40px 36px;
+            ">
+
+              <h1 style="
+                margin:0 0 16px;
+                font-size:28px;
+                line-height:36px;
+                font-weight:700;
+                color:#18181b;
+              ">
+                You've been invited by Rio Achyar
+              </h1>
+
+              <p style="
+                margin:0 0 28px;
+                font-size:16px;
+                line-height:26px;
+                color:#52525b;
+              ">
+                You've been invited to create an account on
+                <strong style="color:#18181b;">LEARN SUPABASE</strong>.
+                Click the button below to accept your invitation and get started.
+              </p>
+
+              <!-- CTA -->
+              <table cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="center" style="border-radius:10px; background-color:#111111;">
+                    <a
+                      href="{{ .ConfirmationURL }}"
+                      style="
+                        display:inline-block;
+                        padding:14px 24px;
+                        font-size:15px;
+                        font-weight:600;
+                        color:#ffffff;
+                        text-decoration:none;
+                        border-radius:10px;
+                      "
+                    >
+                      Accept Invitation
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Divider -->
+              <div style="
+                height:1px;
+                background-color:#e4e4e7;
+                margin:32px 0 24px;
+              "></div>
+
+              <p style="
+                margin:0 0 8px;
+                font-size:13px;
+                line-height:20px;
+                color:#71717a;
+              ">
+                If the button above doesn't work, copy and paste this link into your browser:
+              </p>
+
+              <p style="
+                margin:0;
+                font-size:12px;
+                line-height:20px;
+                word-break:break-all;
+              ">
+                <a
+                  href="{{ .ConfirmationURL }}"
+                  style="color:#2563eb; text-decoration:none;"
+                >
+                  {{ .ConfirmationURL }}
+                </a>
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td align="center" style="padding:24px 20px;">
+
+              <p style="
+                margin:0 0 8px;
+                font-size:12px;
+                line-height:18px;
+                color:#a1a1aa;
+              ">
+                This invitation was sent automatically.
+              </p>
+
+              <p style="
+                margin:0;
+                font-size:12px;
+                line-height:18px;
+                color:#a1a1aa;
+              ">
+                © 2026 LEARN SUPABASE. All rights reserved.
+              </p>
+
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
 ```
