@@ -367,6 +367,7 @@ const fetchOrders = async () => {
     let { data: orders, error } = await supabase
     .from('orders')
     .select('*') // you can show selected field, example .select('id, name`)
+    .eq('name', 'Joko') // untuk filter data by name
     .range(0, pagination.value) // you can add pagination, example show data from index 1-9
     if(orders){
       console.log(orders)
@@ -393,4 +394,65 @@ fetchOrders();
   "04bf8012-e205-44f0-8520-d521dc88aadd"
   name: 
   "Sup Sup"
+```
+
+- example code of insert data :
+```js
+<script setup lang="ts">
+import { ref } from "vue"
+import { supabase } from '@/supabase';
+import User from "@/components/User.vue"
+
+const pagination = ref(9)
+
+
+const insertOrder = async () => {
+  try {
+    
+  let { data, error } = await supabase
+    .from('orders')
+    .insert({
+      address: 'badung',
+      zip_code: '192898',
+      city: 'Hungar',
+      name: 'wiwi',
+      client_id: '07ef2e70-5790-4449-8b96-b272127a1799',
+      price: 69
+    })
+    .select()
+  if(data){
+    console.log(data)
+  }
+  } catch (error) {
+
+  }
+}
+
+const fetchOrders = async () => {
+
+  try {
+    let { data: orders, error } = await supabase
+    .from('orders')
+    .select('*')
+    .eq('name', 'Joko')
+
+    if(orders){
+      console.log(orders)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+fetchOrders();
+</script>
+
+<template>
+  <main class="flex items-center justify-between">
+    <div class="px-2 my-8">
+      <button class="block btn btn-primary" @click="insertOrder">+ Insert</button>
+    </div>
+  </main>
+</template>
+
 ```
