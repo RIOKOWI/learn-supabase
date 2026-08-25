@@ -350,3 +350,36 @@ using (
   true
 );
 ```
+
+- example code for read data on console :
+
+```js
+<script setup lang="ts">
+import { ref } from "vue"
+import { supabase } from '@/supabase';
+import User from "@/components/User.vue"
+
+const fetchOrders = async () => {
+
+  try {
+    let { data: orders, error } = await supabase
+    .from('orders')
+    .select('*')
+
+    if(orders){
+      console.log(orders)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+fetchOrders();
+</script>
+
+<template>
+  <main class="flex items-center justify-between">
+   
+  </main>
+</template>
+```
