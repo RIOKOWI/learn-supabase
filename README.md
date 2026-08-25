@@ -359,13 +359,15 @@ import { ref } from "vue"
 import { supabase } from '@/supabase';
 import User from "@/components/User.vue"
 
+const pagination = ref(9)
+
 const fetchOrders = async () => {
 
   try {
     let { data: orders, error } = await supabase
     .from('orders')
-    .select('*')
-
+    .select('*') // you can show selected field, example .select('id, name`)
+    .range(0, pagination.value) // you can add pagination, example show data from index 1-9
     if(orders){
       console.log(orders)
     }
@@ -382,4 +384,13 @@ fetchOrders();
    
   </main>
 </template>
+```
+
+- data :
+```log
+0: 
+  id: 
+  "04bf8012-e205-44f0-8520-d521dc88aadd"
+  name: 
+  "Sup Sup"
 ```
