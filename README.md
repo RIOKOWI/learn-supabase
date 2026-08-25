@@ -311,3 +311,30 @@ const recoverPassword = async () => {
 * Note : change the basic url for production apps/web
 
 - feature Redirect URL`s its the same use case for redirect to page to another page
+
+# Read, Insert or Delete
+- query for insert data :
+```sql
+INSERT INTO orders (address, zip_code, city, name, id, client_id, created_at)
+VALUES 
+('evangelion', 15560, 'Tangerang', 'Achyar', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Mawar No. 12', 15561, 'Tangerang', 'Budi', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Melati No. 8', 15562, 'Tangerang', 'Citra', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Kenanga No. 21', 15563, 'Tangerang', 'Dimas', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Anggrek No. 5', 15564, 'Tangerang', 'Eka', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Dahlia No. 17', 15565, 'Tangerang', 'Fajar', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Flamboyan No. 9', 15566, 'Tangerang', 'Gilang', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Cempaka No. 14', 15567, 'Tangerang', 'Hana', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Teratai No. 3', 15568, 'Tangerang', 'Indra', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Bougenville No. 25', 15569, 'Tangerang', 'Joko', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Sakura No. 11', 15570, 'Tangerang', 'Karin', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Kamboja No. 19', 15571, 'Tangerang', 'Lukman', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Tulip No. 7', 15572, 'Tangerang', 'Maya', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Lavender No. 16', 15573, 'Tangerang', 'Nanda', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Azalea No. 4', 15574, 'Tangerang', 'Oscar', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Gardenia No. 23', 15575, 'Tangerang', 'Putri', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Wijaya No. 10', 15576, 'Tangerang', 'Rizky', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Cemara No. 18', 15577, 'Tangerang', 'Salsa', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Pinus No. 6', 15578, 'Tangerang', 'Taufik', uuid_generate_v4(), uuid_generate_v4(), NOW()),
+('Jl. Akasia No. 15', 15579, 'Tangerang', 'Vina', uuid_generate_v4(), uuid_generate_v4(), NOW());
+```
