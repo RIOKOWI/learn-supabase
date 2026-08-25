@@ -338,3 +338,15 @@ VALUES
 ('Jl. Pinus No. 6', 15578, 'Tangerang', 'Taufik', uuid_generate_v4(), uuid_generate_v4(), NOW()),
 ('Jl. Akasia No. 15', 15579, 'Tangerang', 'Vina', uuid_generate_v4(), uuid_generate_v4(), NOW());
 ```
+
+- set new policy for user authenticated read data :
+```sql
+create policy "Enable read access for authenticated users"
+on "public"."orders"
+as PERMISSIVE
+for SELECT
+to authenticated
+using (
+  true
+);
+```
