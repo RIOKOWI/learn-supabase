@@ -454,5 +454,16 @@ fetchOrders();
     </div>
   </main>
 </template>
+```
 
+- rls to delete :
+```sql
+create policy "Enable delete for users based on user_id"
+on "public"."orders"
+as PERMISSIVE
+for DELETE
+to authenticated
+using (
+  (select auth.uid()) = user_id
+);
 ```
