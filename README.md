@@ -467,3 +467,139 @@ using (
   (select auth.uid()) = user_id
 );
 ```
+
+
+# Subscription
+- Realtime Changes
+- example code subcription:
+```js
+<script setup lang="ts">
+import { ref } from "vue"
+import { supabase } from '@/supabase';
+import User from "@/components/User.vue"
+
+
+interface Order {
+  name: string,
+  id: string,
+  created_at: string,
+  client_id: string,
+  price: number,
+  address: string,
+  city: string,
+  zip_code: string,
+}
+
+const orders = ref<Order[]>([])
+
+const pagination = ref(9)
+
+
+
+// const insertOrder = async () => {
+//   try {
+    
+//   let { data, error } = await supabase
+//     .from('orders')
+//     .insert({
+//       address: 'badung',
+//       zip_code: '192898',
+//       city: 'Hungar',
+//       name: 'wiwi',
+//       client_id: '07ef2e70-5790-4449-8b96-b272127a1799',
+//       price: 69
+//     })
+//     .select()
+//   if(data){
+//     console.log(data)
+//   }
+//   } catch (error) {
+
+//   }
+// }
+
+const fetchOrders = async () => {
+
+   try {
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*')
+    if (data) {
+      console.log(data)
+      orders.value = data
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// const updateWiwi = async () => {
+//   try {
+//     let { data, error } = await supabase
+//       .from('orders')
+//       .update({ price: 2000 })
+//       .eq('name', 'Hana')
+//       .select()
+
+//       if(data){
+//           console.log(data)
+//         }
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
+
+
+// const deleteWiwi = async () => {
+//     let { error } = await supabase
+//       .from('orders')
+//       .delete()
+//       .eq('name', 'Fajar')
+// }
+
+fetchOrders();
+
+const channel = supabase
+  .channel('my_new_channel_order')
+  .on(
+    'postgres_changes',
+    {
+      event: '*',
+      schema: 'public',
+      table: 'orders',
+      // filter: 'body=eq' bisa kasih filter seperti di contoh
+    },
+    (event) => {
+      console.log(event)
+    }
+  )
+
+.subscribe()
+</script>
+
+<template>
+  <main class="flex items-center justify-between">
+    <div class="container px-2 mx-auto my-8">
+      <User />
+      <div v-for="order, index in orders" :key="index">
+        <div v-if="order" class="grid grid-cols-5 gap-3 px-3 py-2 my-2 border rounded-lg shadow-md">
+          <div v-if="order.name">{{ order.name }}</div>
+          <div>${{ order.price || 0 }}</div>
+          <div v-if="order.address">{{ order.address }}</div>
+          <div v-if="order.zip_code">{{ order.zip_code }}</div>
+          <div v-if="order.city">{{ order.city }}</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</template>
+```
+
+- console result
+```log
+client.ts:19 [vite] connecting...
+client.ts:134 [vite] connected.
+Home.vue:53 (19) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]0: {id: '5a7baf43-df7e-4fe8-bb0a-757c71b10ff3', created_at: '2026-08-25T11:41:39.312768+00:00', client_id: '995045dc-0d22-4355-95d4-b594e325a60d', price: null, address: 'evangelion', …}1: {id: 'd5c7c9a5-baa2-430d-a793-9a272719e503', created_at: '2026-08-25T11:41:39.312768+00:00', client_id: 'f6cae42b-bd9a-4a7c-8460-d9ddf07fa005', price: null, address: 'Jl. Mawar No. 12', …}2: {id: '1bb7c532-4553-4bbf-921e-a4afe2083b25', created_at: '2026-08-25T11:41:39.312768+00:00', client_id: '69ffea01-fd38-4885-8fc1-5485c920a9fb', price: null, address: 'Jl. Melati No. 8', …}3: {id: 'd3358022-2605-4120-bf29-8c7c18aa80ae', created_at: '2026-08-25T11:41:39.312768+00:00', client_id: '42175f9f-1660-41d3-8285-a5bd42f821fc', price: null, address: 'Jl. Kenanga No. 21', …}4: {id: '46308b12-792f-409e-a3d1-3c3a85d4f34d', created_at: '2026-08-25T11:41:39.312768+00:00', client_id: '732a2c4a-1b6a-40f3-be49-f63d416af390', price: null, address: 'Jl. Anggrek No. 5', …}5: {id: '2ea80d5a-06d1-4179-8b3e-c53517f4c4db', created_at: '2026-08-25T11:41:39.312768+00:00', client_id: '6cbb044a-29e2-4145-b924-d8d6365f998e', price: null, address: 'Jl. Flamboyan No. 9', …}6: {id: '8076cc02-3dc0-4038-94a4-9237c2e3e847', created_at: '2026-08-25T11:41:39.312768+00:00', client_id: 'e1bc49c5-4692-42e0-9b48-210afdbe1842', price: null, address: 'Jl. Cempaka No. 14', …}7: {id: '9398e277-ed9f-431c-8af9-45606ecc5435', created_at: '2026-08-25T11:41:39.312768+00:00', client_id: '4ff7ff81-2ee9-4ae2-a476-04c0ab214f6f', price: null, address: 'Jl. Teratai No. 3', …}8: {id: '06ad6ea5-440f-4c15-be33-009af40005c6', created_at: '2026-08-25T11:41:39.312768+00:00', client_id: '4d683301-d5e7-4d0c-a846-756d4e1be5f3', price: null, address: 'Jl. Bougenville No. 25', …}9: {id: '470c0cf1-ac7b-4eb7-b0fa-cdd58a8d0ff6', created_at: '2026-08-25T11:41:39.312768+00:00', client_id: '24be21ef-fd81-4e97-a5cc-62e64edcfeb8', price: null, address: 'Jl. Sakura No. 11', …}10: {id: '54ad4395-301b-4d0f-8d3d-66efb8c3da41', created_at: '2026-08-25T11:41:39.312768+00:00', client_id: 'c98d54b9-f761-4025-88d5-2f14713256cb', price: null, address: 'Jl. Kamboja No. 19', …}11: {id: 'a3b1eff0-043d-493b-ba3f-a516ecdb5d2a', created_at: '2026-08-25T11:41:39.312768+00:00', client_id: '17bf25c5-5cdb-4252-9407-62f5f3b45138', price: null, address: 'Jl. Tulip No. 7', …}12: {id: '1faaa96e-08b6-4095-8af2-df5be4a74526', created_at: '2026-08-25T11:41:39.312768+00:00', client_id: '54079747-0d5c-4726-a055-f5417fdddd9b', price: null, address: 'Jl. Lavender No. 16', …}13: {id: '88277337-dfa2-45c7-b353-f99f98bdb57f', created_at: '2026-08-25T11:41:39.312768+00:00', client_id: '899c46a8-53af-43f6-bb2e-f38041aa9325', price: null, address: 'Jl. Azalea No. 4', …}14: {id: 'ad442508-4c38-441f-9b92-bbfe3cfaa5ce', created_at: '2026-08-25T11:41:39.312768+00:00', client_id: 'a6a5c567-3629-405d-b086-32b0c55a8201', price: null, address: 'Jl. Gardenia No. 23', …}15: {id: '3fa1df38-9b59-4d66-8707-4ea4e212456d', created_at: '2026-08-25T11:41:39.312768+00:00', client_id: '6be6ab4a-008e-453e-b83f-a53010411346', price: null, address: 'Jl. Cemara No. 18', …}16: {id: '791a4201-ffc4-4125-9324-7b33e89f27d9', created_at: '2026-08-25T11:41:39.312768+00:00', client_id: '3c0aa2f9-2fbe-4744-b003-98001685dfd5', price: null, address: 'Jl. Pinus No. 6', …}17: {id: 'd4a63e46-3fc7-4e07-bf19-892c4959d34d', created_at: '2026-08-25T11:41:39.312768+00:00', client_id: 'f65f889c-c8bd-4a36-96ca-de9837912c22', price: null, address: 'Jl. Akasia No. 15', …}18: {id: '04bf8012-e205-44f0-8520-d521dc88aadd', created_at: '2026-08-19T07:28:54.720354+00:00', client_id: '07ef2e70-5790-4449-8b96-b272127a1688', price: 20, address: 'Jl. Embut', …}length: 19[[Prototype]]: Array(0)
+Home.vue:98 {schema: 'public', table: 'orders', commit_timestamp: '2026-08-26T12:37:47.551Z', eventType: 'UPDATE', new: {…}, …}commit_timestamp: "2026-08-26T12:37:47.551Z"errors: nulleventType: "UPDATE"new: address: "Jl. Embut Embut"city: "Tarakarta"client_id: "07ef2e70-5790-4449-8b96-b272127a1688"created_at: "2026-08-19T07:28:54.720354+00:00"id: "04bf8012-e205-44f0-8520-d521dc88aadd"name: "Sup Sup"price: 20zip_code: "232352"[[Prototype]]: Objectold: id: "04bf8012-e205-44f0-8520-d521dc88aadd"[[Prototype]]: Objectschema: "public"table: "orders"[[Prototype]]: Objectconstructor: ƒ Object()hasOwnProperty: ƒ hasOwnProperty()isPrototypeOf: ƒ isPrototypeOf()propertyIsEnumerable: ƒ propertyIsEnumerable()toLocaleString: ƒ toLocaleString()toString: ƒ toString()valueOf: ƒ valueOf()__defineGetter__: ƒ __defineGetter__()__defineSetter__: ƒ __defineSetter__()__lookupGetter__: ƒ __lookupGetter__()__lookupSetter__: ƒ __lookupSetter__()__proto__: (...)get __proto__: ƒ __proto__()set __proto__: ƒ __proto__()
+
+```
