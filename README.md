@@ -614,6 +614,48 @@ Home.vue:98 {schema: 'public', table: 'orders', commit_timestamp: '2026-08-26T12
 
 ```
 
-
 # Relations
 - you can add on the Database->Tables without query
+
+# Function
+- Function = tempat menyimpan logic yang ingin dijalankan di database.
+- example query create function :
+```sql
+create or replace function increment (row_id uuid)
+returns void as
+$$
+  update orders
+  set view = view + 1
+  where row_id = id;
+$$
+language sql volatile;
+```
+
+- meaningful comments of query function
+```sql
+-- Membuat function bernama "increment" atau mengganti function
+-- yang sudah ada dengan nama dan parameter yang sama.
+create or replace function increment (row_id uuid)
+
+-- Function tidak mengembalikan nilai apa pun.
+returns void as
+
+$$
+  -- Menaikkan nilai kolom "view" pada tabel "orders" sebesar 1.
+  update orders
+
+  -- Menambahkan 1 ke jumlah view yang sudah ada.
+  set view = view + 1
+
+  -- Hanya mengubah data order yang memiliki ID sesuai dengan
+  -- UUID yang diberikan melalui parameter "row_id".
+  where row_id = id;
+$$
+
+-- Menentukan bahwa function menggunakan SQL sebagai bahasanya.
+language sql
+
+-- Menandakan bahwa function dapat menghasilkan efek samping
+-- seperti melakukan UPDATE dan hasilnya tidak selalu sama.
+volatile;
+```
