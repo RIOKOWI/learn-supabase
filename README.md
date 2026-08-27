@@ -678,3 +678,80 @@ const incrementViews = async () => {
   }
 }
 ```
+
+
+# Triggers
+- trigger is a function that run before of after
+- example query :
+```sql
+CREATE TABLE USERS (
+  id uuid references auth.users not null primary key,
+  email text
+);
+
+CREATE OR replace function public.handle_new_user()
+returns trigger as $$
+begin
+  insert into public.users (id, email)
+  values (new.id, new.email);
+  return new;
+end;
+$$ language plpgsql security definer;
+
+create trigger on_new_user
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user()
+```
+
+- query with meaningfull comments :
+```sql
+-- Membuat tabel "users" untuk menyimpan data tambahan pengguna.
+-- ID pengguna diambil dari auth.users milik Supabase Auth.
+CREATE TABLE USERS (
+
+  -- ID pengguna dari Supabase Auth.
+  -- Menjadi primary key dan harus memiliki user yang sesuai di auth.users.
+  id uuid references auth.users not null primary key,
+
+  -- Menyimpan alamat email pengguna.
+  email text
+
+);
+
+
+-- Membuat atau mengganti function yang akan dijalankan
+-- secara otomatis ketika ada user baru di Supabase Auth.
+CREATE OR replace function public.handle_new_user()
+
+-- Karena function ini dipanggil oleh trigger,
+-- function harus mengembalikan data bertipe "trigger".
+returns trigger as $$
+
+begin
+
+  -- Menambahkan user baru ke tabel public.users.
+  insert into public.users (id, email)
+
+  -- Mengambil ID dan email dari user yang baru dibuat
+  -- di tabel auth.users.
+  values (new.id, new.email);
+
+  -- Mengembalikan data user yang baru dibuat
+  -- agar proses trigger dapat dilanjutkan.
+  return new;
+
+end;
+
+$$ language plpgsql security definer;
+
+
+-- Membuat trigger yang otomatis berjalan
+-- setelah user baru berhasil dibuat di auth.users.
+create trigger on_new_user
+
+  -- Trigger dijalankan setelah proses INSERT selesai.
+  after insert on auth.users
+
+  -- Trigger dijalankan untuk setiap user baru yang dibuat.
+  for each row execute procedure public.handle_new_user();
+```
