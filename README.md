@@ -755,3 +755,18 @@ create trigger on_new_user
   -- Trigger dijalankan untuk setiap user baru yang dibuat.
   for each row execute procedure public.handle_new_user();
 ```
+
+
+# Schemas
+- wadah untuk mengelompokkan tabel
+- contoh : public.orders  | public = schema & orders = table
+- exmample query create schemas :
+```sql
+CREATE SCHEMA sales;
+
+CREATE TABLE sales.customer (
+  id uuid not null primary key,
+  name text,
+  email text
+);
+```
