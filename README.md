@@ -659,3 +659,22 @@ language sql
 -- seperti melakukan UPDATE dan hasilnya tidak selalu sama.
 volatile;
 ```
+
+- example function code :
+```js
+const incrementViews = async () => {
+  try {
+    const { data, error } = await supabase.rpc('increment', {
+      row_id: '04bf8012-e205-44f0-8520-d521dc88aadd'
+    })
+
+    if (data) {
+      console.log("success")
+      console.log(data)
+    }
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+```
