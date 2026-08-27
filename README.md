@@ -570,7 +570,17 @@ const channel = supabase
       // filter: 'body=eq' bisa kasih filter seperti di contoh
     },
     (event) => {
-      console.log(event)
+      console.log(event) // show change on the log
+      // const { new: newOrder } = event;  showing realtime changes
+      // orders.value = orders.value.map(order => {
+      //   if (order.id === newOrder.id) {
+      //     return {
+      //       ...order,
+      //       ...newOrder
+      //     }
+      //   }
+      //   return order
+      // })
     }
   )
 
