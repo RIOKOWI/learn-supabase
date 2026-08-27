@@ -613,3 +613,7 @@ Home.vue:53 (19) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}
 Home.vue:98 {schema: 'public', table: 'orders', commit_timestamp: '2026-08-26T12:37:47.551Z', eventType: 'UPDATE', new: {…}, …}commit_timestamp: "2026-08-26T12:37:47.551Z"errors: nulleventType: "UPDATE"new: address: "Jl. Embut Embut"city: "Tarakarta"client_id: "07ef2e70-5790-4449-8b96-b272127a1688"created_at: "2026-08-19T07:28:54.720354+00:00"id: "04bf8012-e205-44f0-8520-d521dc88aadd"name: "Sup Sup"price: 20zip_code: "232352"[[Prototype]]: Objectold: id: "04bf8012-e205-44f0-8520-d521dc88aadd"[[Prototype]]: Objectschema: "public"table: "orders"[[Prototype]]: Objectconstructor: ƒ Object()hasOwnProperty: ƒ hasOwnProperty()isPrototypeOf: ƒ isPrototypeOf()propertyIsEnumerable: ƒ propertyIsEnumerable()toLocaleString: ƒ toLocaleString()toString: ƒ toString()valueOf: ƒ valueOf()__defineGetter__: ƒ __defineGetter__()__defineSetter__: ƒ __defineSetter__()__lookupGetter__: ƒ __lookupGetter__()__lookupSetter__: ƒ __lookupSetter__()__proto__: (...)get __proto__: ƒ __proto__()set __proto__: ƒ __proto__()
 
 ```
+
+
+# Relations
+- you can add on the Database->Tables without query
