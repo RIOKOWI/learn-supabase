@@ -882,3 +882,20 @@ export default {
   </div>
 </template>
 ```
+
+
+# Logs
+- you can see logs detail on menu `Logs Explorer`
+- you caan create/using template query for the log:
+```sql
+select
+  timestamp,
+  event_message,
+  toInt32OrZero(log_attributes['response.status_code']) as status_code
+from logs
+where source = 'edge_logs'
+  and toInt32OrZero(log_attributes['response.status_code']) >= 500
+order by timestamp desc
+limit 100
+```
+
