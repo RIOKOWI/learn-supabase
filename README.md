@@ -965,3 +965,8 @@ supabase functions download hello-world
 supabase functions deploy hello-world
 ```
 
+# Webhook
+- you can set webhook for automate update data from 3rd party like payment gateway
+- set the webhook on Database Webhhook on database
+* NOTE = you need to create endpoint for webhook
+
