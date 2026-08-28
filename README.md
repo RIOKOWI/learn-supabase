@@ -943,3 +943,9 @@ end;
 $$ language plpgsql;
 ```
 
+# Realtime
+- func that will show realtime data changes
+
+# Edge Function
+- handle payment gateway
+
