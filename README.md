@@ -899,3 +899,47 @@ order by timestamp desc
 limit 100
 ```
 
+# Extension
+- Extension = plugin untuk database PostgreSQL.
+- example query of extension http :
+```sql
+create or replace function get_api_data() returns jsonb as $$
+declare
+  url text := 'https://example.com/api/data';
+  response jsonb;
+begin
+  select body::jsonb
+  from http(url)
+  into response;
+
+  return response;
+end;
+$$ language plpgsql;
+```
+
+- query with meaningfull comment
+```sql
+-- Enable the HTTP extension to allow PostgreSQL functions
+-- to make HTTP requests to external APIs.
+create extension if not exists http;
+
+
+-- Fetch JSON data from an external API and return it as JSONB.
+create or replace function get_api_data()
+returns jsonb
+as $$
+declare
+  url text := 'https://example.com/api/data';
+  response jsonb;
+begin
+  -- Send an HTTP GET request to the specified API endpoint
+  -- and convert the response body into JSONB.
+  select body::jsonb
+  from http(url)
+  into response;
+
+  return response;
+end;
+$$ language plpgsql;
+```
+
