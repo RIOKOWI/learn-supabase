@@ -947,5 +947,21 @@ $$ language plpgsql;
 - func that will show realtime data changes
 
 # Edge Function
-- handle payment gateway
+- create transaction from payment gateway or 3rd party
+- you need `SERVICE_KEY` on env and `BASE_URL`
+```bash
+# installing scoop
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+irm get.scoop.sh | iex
+scoop --version
+```
+
+```bash
+# installing supabase instance
+scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
+scoop install supabase
+supabase --version
+supabase functions download hello-world
+supabase functions deploy hello-world
+```
 
