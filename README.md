@@ -770,3 +770,51 @@ CREATE TABLE sales.customer (
   email text
 );
 ```
+
+# Storage 
+- tempat untuk nyimpan/upload pho,vid,file, dll
+- free plan only 1 gb
+- after you create a bucket you must set row level securiy/policies for tour bucket
+```sql
+create policy objects_select_policy on storage.objects for select
+  using (auth.role() = 'authenticated');
+
+create policy object_insert_policy on storage.objects for insert
+  with check (auth.role() = 'authenticated');
+
+create policy objects_update_policy on storage.objects for update
+  using (auth.role() = 'authenticated');
+
+create policy objects_delete_policy on storage.objects for delete
+  using (auth.role() = 'authenticated');
+```
+
+- query with meaningfull comment
+```sql
+-- Allow authenticated users to view files stored in Supabase Storage.
+create policy objects_select_policy
+on storage.objects
+for select
+using (auth.role() = 'authenticated');
+
+
+-- Allow authenticated users to upload new files to Supabase Storage.
+create policy object_insert_policy
+on storage.objects
+for insert
+with check (auth.role() = 'authenticated');
+
+
+-- Allow authenticated users to update existing files in Supabase Storage.
+create policy objects_update_policy
+on storage.objects
+for update
+using (auth.role() = 'authenticated');
+
+
+-- Allow authenticated users to delete files from Supabase Storage.
+create policy objects_delete_policy
+on storage.objects
+for delete
+using (auth.role() = 'authenticated');
+```
